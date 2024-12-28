@@ -70,11 +70,18 @@ with kolnan:
         <div class="container">
             <h2 style="color:blue;">PT. KARYAPRATAMA DUNIA</h2>
             <img src='data:image/png;base64,{image_base64}'/>
+            <br>
+            <br>
+            <p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum memulai:
+                <br>         
+                1. Siapkan file RECAPITULATION dari folder PAMOR<br>
+                2. Pastikan file extensi excelnya adalah .xlsm<br>
+                3. Beri identitas pada setiap nama filenya, misal "1JanRecap.xlsm"
         </div>
         """,
         unsafe_allow_html=True
 	)
-
+        
 	# st.markdown("---")
 
 
@@ -82,28 +89,28 @@ with kolnan:
 # Fungsi untuk membuka dialog multi-file selection
 st.markdown("---")
 
-kiri,kanan=st.columns(2)
+# kiri,kanan=st.columns(2)
 
-with kiri:
+# with kiri:
     
-    def select_files():
-        root = Tk()
-        root.withdraw()  # Menyembunyikan jendela utama Tkinter
-        root.attributes('-topmost', True)  # Membawa dialog ke depan
-        file_paths = filedialog.askopenfilenames(
-            title="Pilih file Excel",
-            filetypes=[("Excel files", "*.xlsm")]
-        )
-        root.destroy()
-        return file_paths
+def select_files():
+    root = Tk()
+    root.withdraw()  # Menyembunyikan jendela utama Tkinter
+    root.attributes('-topmost', True)  # Membawa dialog ke depan
+    file_paths = filedialog.askopenfilenames(
+        title="Pilih file Excel",
+        filetypes=[("Excel files", "*.xlsm")]
+    )
+    root.destroy()
+    return file_paths
     
-with kanan:
+# with kanan:
     
-    st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum memulai:
-                <br>         
-                1. Siapkan file RECAPITULATION dari folder PAMOR<br>
-                2. Pastikan file extensi excelnya adalah .xlsm<br>
-                3. Beri identitas pada setiap nama filenya, misal "1JanRecap.xlsm" </p>""",unsafe_allow_html=True) 
+#     st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum memulai:
+#                 <br>         
+#                 1. Siapkan file RECAPITULATION dari folder PAMOR<br>
+#                 2. Pastikan file extensi excelnya adalah .xlsm<br>
+#                 3. Beri identitas pada setiap nama filenya, misal "1JanRecap.xlsm" </p>""",unsafe_allow_html=True) 
 
 # Streamlit: Tombol untuk memilih file secara manual
 # st.title("Data Recapitulation MOR and NG")
