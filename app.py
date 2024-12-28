@@ -7,7 +7,6 @@ import pandas as pd
 import openpyxl
 from openpyxl import load_workbook
 import streamlit as st
-from tkinter import Tk, filedialog
 import base64
 import plotly.express as px
 
@@ -90,38 +89,40 @@ with kolnan:
 #START SEDOT
 # Fungsi untuk membuka dialog multi-file selection
 st.markdown("---")
-
-# kiri,kanan=st.columns(2)
-
-# with kiri:
     
+# def select_files():
+#     root = Tk()
+#     root.withdraw()  # Menyembunyikan jendela utama Tkinter
+#     root.attributes('-topmost', True)  # Membawa dialog ke depan
+#     file_paths = filedialog.askopenfilenames(
+#         title="Pilih file Excel",
+#         filetypes=[("Excel files", "*.xlsm")]
+#     )
+#     root.destroy()
+#     return file_paths
+
+# Function to select files using Streamlit
 def select_files():
-    root = Tk()
-    root.withdraw()  # Menyembunyikan jendela utama Tkinter
-    root.attributes('-topmost', True)  # Membawa dialog ke depan
-    file_paths = filedialog.askopenfilenames(
-        title="Pilih file Excel",
-        filetypes=[("Excel files", "*.xlsm")]
+    st.title("Upload Excel Files")
+    uploaded_files = st.file_uploader(
+        "Select multiple Excel files",
+        type=["xlsm"],
+        accept_multiple_files=True
     )
-    root.destroy()
-    return file_paths
+    return uploaded_files
     
-# with kanan:
-    
-#     st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum memulai:
-#                 <br>         
-#                 1. Siapkan file RECAPITULATION dari folder PAMOR<br>
-#                 2. Pastikan file extensi excelnya adalah .xlsm<br>
-#                 3. Beri identitas pada setiap nama filenya, misal "1JanRecap.xlsm" </p>""",unsafe_allow_html=True) 
+if __name__ == "__main__":
+    uploaded_files = select_files()
+    if uploaded_files:
+        for uploaded_file in uploaded_files:
+            st.write(f"Uploaded file: {uploaded_file.name}")
 
-# Streamlit: Tombol untuk memilih file secara manual
-# st.title("Data Recapitulation MOR and NG")
-if st.button("Pilih file Excel"):
-    selected_files = select_files()  # Memanggil fungsi dialog file
-else:
-    selected_files = []
+# if st.button("Pilih file Excel"):
+#     selected_files = select_files()  # Memanggil fungsi dialog file
+# else:
+#     selected_files = []
 
-if selected_files:  # Jika user telah memilih file
+if uploaded_files:  # Jika user telah memilih file
     # Alamat sel yang akan diambil
     cols_mor = ['B4', 'B5', 'B7', 'B6', 'B8', 'B9', 'B10', 'B27', 'B1', 'B2', 'B3']
     cols_ng = ['D4', 'D5', 'D7', 'D6', 'D8', 'D9', 'D10', 'D27', 'D1', 'D2', 'D3']
@@ -135,8 +136,9 @@ if selected_files:  # Jika user telah memilih file
     data_mor = []
     data_ng = []
 
-    for file_path in selected_files:
-        file_name = os.path.basename(file_path)  # Hanya mengambil nama file
+    for uploaded_file in uploaded_files:
+        file_name = uploaded_file.name  # Hanya mengambil nama file
+
         workbook_data_mor = {'Nama File': file_name}
         workbook_data_ng = {'Nama File': file_name}
 
