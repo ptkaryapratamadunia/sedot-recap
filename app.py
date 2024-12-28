@@ -8,6 +8,7 @@ from openpyxl import load_workbook
 import streamlit as st
 from tkinter import Tk, filedialog
 import base64
+import plotly.express as px
 
 st.set_page_config(page_title="Quality Stamping Report", page_icon=":bar_chart:",layout="wide")
 
@@ -178,11 +179,35 @@ if selected_files:  # Jika user telah memilih file
     st.write("Recapitulation NG (%)")
     st.dataframe(ng_table)
 
+     # Membuat grafik garis interaktif
+    mor_melted = mor_table.melt(
+        id_vars=['Nama File'], 
+        value_vars=header_names,
+        var_name='MC', 
+        value_name='Value'
+    )
+
+    st.subheader("Grafik Tren MC terhadap Nama File")
+    fig = px.line(
+        mor_melted, 
+        x='Nama File', 
+        y='Value', 
+        color='MC',
+        title="Trendline per MC terhadap Nama File",
+        markers=True
+    )
+    fig.update_layout(
+        xaxis_title="Nama File",
+        yaxis_title="Value",
+        legend_title="MC",
+        template="plotly_white"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    # Akhir Membuat grafik garis interaktif
+
         #Footer
     #Footer diisi foto ditaruh ditengah
     st.markdown("---")
-
-
     kaki_kiri,kaki_kiri2, kaki_tengah,kaki_kanan2, kaki_kanan=st.columns((2,2,1,2,2))
 
     with kaki_kiri:
