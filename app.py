@@ -144,7 +144,7 @@ if uploaded_files:  # Jika user telah memilih file
 
         try:
             # Membuka workbook menggunakan openpyxl
-            wb = load_workbook(file_path, data_only=True)
+            wb = load_workbook(uploaded_file, data_only=True)
             sheet = wb['REKAP']  # Pastikan nama sheet sesuai
 
             # Mengambil data dari sel yang sesuai untuk MOR dan NG
