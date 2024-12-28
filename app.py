@@ -7,7 +7,6 @@ import pandas as pd
 import openpyxl
 from openpyxl import load_workbook
 import streamlit as st
-import tkinter
 from tkinter import Tk, filedialog
 import base64
 import plotly.express as px
