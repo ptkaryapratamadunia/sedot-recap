@@ -179,30 +179,57 @@ if selected_files:  # Jika user telah memilih file
     st.write("Recapitulation NG (%)")
     st.dataframe(ng_table)
 
-     # Membuat grafik garis interaktif
+    st.markdown("---")
+     # Membuat grafik garis interaktif MOR
     mor_melted = mor_table.melt(
         id_vars=['Nama File'], 
         value_vars=header_names,
         var_name='MC', 
-        value_name='Value'
+        value_name='MOR (%)'
     )
 
-    st.subheader("Grafik Tren MC terhadap Nama File")
+    st.subheader("Grafik Tren MOR by Machine & Month")
     fig = px.line(
         mor_melted, 
         x='Nama File', 
-        y='Value', 
+        y='MOR (%)', 
         color='MC',
-        title="Trendline per MC terhadap Nama File",
+        title="Trendline MOR by Machine & Month",
         markers=True
     )
     fig.update_layout(
         xaxis_title="Nama File",
-        yaxis_title="Value",
+        yaxis_title="MOR (%)",
         legend_title="MC",
         template="plotly_white"
     )
     st.plotly_chart(fig, use_container_width=True)
+
+    st.markdown("---")
+    # Membuat grafik garis interaktif untuk NG
+    ng_melted = ng_table.melt(
+        id_vars=['Nama File'], 
+        value_vars=header_names,
+        var_name='MC', 
+        value_name='NG (%)'
+    )
+    st.subheader("Grafik Tren NG  by Machine & Month")
+    fig_ng = px.line(
+        ng_melted, 
+        x='Nama File', 
+        y='NG (%)', 
+        color='MC',
+        title="Trendline NG  by Machine & Month",
+        markers=True
+    )
+    fig_ng.update_layout(
+        xaxis_title="Nama File",
+        yaxis_title="ng (%)",
+        legend_title="MC",
+        template="plotly_white"
+    )
+    st.plotly_chart(fig_ng, use_container_width=True)
+
     # Akhir Membuat grafik garis interaktif
 
         #Footer
