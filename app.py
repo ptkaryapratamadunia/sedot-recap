@@ -90,7 +90,7 @@ with kolnan:
 # Fungsi untuk membuka dialog multi-file selection
 st.markdown("---")
     
-# def select_files():
+# def select_files(): ------> diganti dengan streamlit uploader, krn tkinter tdk bisa dideploy di cloud streamlit - 28Dec2024 11.46WIB 
 #     root = Tk()
 #     root.withdraw()  # Menyembunyikan jendela utama Tkinter
 #     root.attributes('-topmost', True)  # Membawa dialog ke depan
@@ -101,11 +101,11 @@ st.markdown("---")
 #     root.destroy()
 #     return file_paths
 
-# Function to select files using Streamlit
+# Function to select files using Streamlit 28Dec2024
 def select_files():
-    st.title("Upload Excel Files")
+    # st.title("Upload Excel Files")
     uploaded_files = st.file_uploader(
-        "Select multiple Excel files",
+        "Pilih file excel berekstensi .xlsm:",
         type=["xlsm"],
         accept_multiple_files=True
     )
@@ -116,11 +116,6 @@ if __name__ == "__main__":
     if uploaded_files:
         for uploaded_file in uploaded_files:
             st.write(f"Uploaded file: {uploaded_file.name}")
-
-# if st.button("Pilih file Excel"):
-#     selected_files = select_files()  # Memanggil fungsi dialog file
-# else:
-#     selected_files = []
 
 if uploaded_files:  # Jika user telah memilih file
     # Alamat sel yang akan diambil
