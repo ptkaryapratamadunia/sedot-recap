@@ -4,6 +4,7 @@
 
 import os
 import pandas as pd
+import openpyxl
 from openpyxl import load_workbook
 import streamlit as st
 from tkinter import Tk, filedialog
