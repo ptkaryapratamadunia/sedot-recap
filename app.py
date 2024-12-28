@@ -132,7 +132,9 @@ if uploaded_files:  # Jika user telah memilih file
     data_ng = []
 
     for uploaded_file in uploaded_files:
-        file_name = uploaded_file.name  # Hanya mengambil nama file
+        # file_name = uploaded_file.name  # Hanya mengambil nama file
+        # Ambil nama file tanpa ekstensi
+        file_name = os.path.splitext(uploaded_file.name)[0]  # Mengambil nama file tanpa ekstensi
 
         workbook_data_mor = {'Nama File': file_name}
         workbook_data_ng = {'Nama File': file_name}
