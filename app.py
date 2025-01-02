@@ -287,9 +287,38 @@ if uploaded_files:  # Jika user telah memilih file
      # Menghilangkan legend
     fig.update_layout(showlegend=False)
     st.plotly_chart(fig)
+
+    st.markdown("---")
+ 
+    # Membuat grafik batang interaktif untuk MOR GR#02
+    fig = px.bar(
+        mor_table,
+        x='Nama File',
+        y='GR#02',
+        color='Nama File',
+        title='Grafik MOR GR#02',
+        labels={'GR#02': 'GR#02 (%)', 'Nama File': 'Bulan-Tahun'},
+        text_auto=True,
+    )
+
+    # Menambahkan garis horizontal pada nilai 85%
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=1,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2),
+        xref='paper',
+        yref='y'
+    )
+
+     # Menghilangkan legend
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig)
+    
     st.markdown("---")
 
-    
         #Footer
     #Footer diisi foto ditaruh ditengah
     st.markdown("---")
