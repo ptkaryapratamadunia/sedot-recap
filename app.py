@@ -449,9 +449,148 @@ if uploaded_files:  # Jika user telah memilih file
         fig.update_layout(showlegend=False)
         st.plotly_chart(fig)
 
+        st.markdown("---")
 
+        # Membuat grafik batang interaktif untuk MOR RING#7
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='RING#7',
+            color='Nama File',
+            title='Grafik MOR RING#7',
+            labels={'RING#7': 'RING#7 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
+            # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+        st.markdown("---")
+
+        # Membuat grafik batang interaktif untuk MOR PW#10
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='PW#10',
+            color='Nama File',
+            title='Grafik MOR PW#10',
+            labels={'PW#10': 'PW#10 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
+
+            # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+        st.markdown("---")
+
+        # Membuat grafik batang interaktif untuk MOR CR#12
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='CR#12',
+            color='Nama File',
+            title='Grafik MOR  CR#12',
+            labels={'CR#12': 'CR#12 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
+
+            # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+        st.markdown("---")
+
+        # Membuat grafik batang interaktif untuk MOR CR#13
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='CR#13',
+            color='Nama File',
+            title='Grafik MOR CR#13',
+            labels={'CR#13': 'CR#13 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
+
+            # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+        # Membuat grafik batang interaktif untuk MOR CR#14
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='CR#14',
+            color='Nama File',
+            title='Grafik MOR CR#14',
+            labels={'CR#14': 'CR#14 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
+
+            # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
     #Footer
     #Footer diisi foto ditaruh ditengah
