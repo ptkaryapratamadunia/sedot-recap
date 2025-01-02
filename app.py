@@ -73,11 +73,12 @@ with kolnan:
             <img src='data:image/png;base64,{image_base64}'/>
             <br>
             <br>
-            <p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum memulai:
+            <p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum upload file:
                 <br>         
                 1. Siapkan file RECAPITULATION dari folder PAMOR<br>
                 2. Pastikan file extensi excelnya adalah .xlsm<br>
-                3. Beri identitas pada setiap nama filenya, misal "1JanRecap.xlsm"
+                3. Copy file RECAPITULATION ke dalam folder yang sama<br>
+                4. Beri identitas (rename) pada setiap nama filenya, misal "1Jan2024.xlsm
         </div>
         """,
         unsafe_allow_html=True
