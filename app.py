@@ -72,12 +72,17 @@ with kolnan:
         <div class="container">
             <h2 style="color:blue;">PT. KARYAPRATAMA DUNIA</h2>
             <img src='data:image/png;base64,{image_base64}'/>
+            <br>
+            <br>
+            <br>
+            <h5 style="color:brown;font-size:12px;">Quality Dept. - Stamping Part</h5>
         </div>
         """,
         unsafe_allow_html=True
 	)
         
 	# st.markdown("---")
+ 
 
 
 #START SEDOT
@@ -107,8 +112,9 @@ with sisi_kiri:
         """,
         unsafe_allow_html=True
     )
+
 with sisi_kanan:
-# Function to select files using Streamlit 28Dec2024
+    # Function to select files using Streamlit 28Dec2024
     def select_files():
         # st.title("Upload Excel Files")
         uploaded_files = st.file_uploader(
@@ -118,11 +124,11 @@ with sisi_kanan:
         )
         return uploaded_files
         
-if __name__ == "__main__":
-    uploaded_files = select_files()
-    if uploaded_files:
-        for uploaded_file in uploaded_files:
-            st.write(f"Uploaded file: {uploaded_file.name}")
+    if __name__ == "__main__":
+        uploaded_files = select_files()
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                st.write(f"Uploaded file: {uploaded_file.name}")
 
 if uploaded_files:  # Jika user telah memilih file
     # Alamat sel yang akan diambil
@@ -443,14 +449,11 @@ if uploaded_files:  # Jika user telah memilih file
         fig.update_layout(showlegend=False)
         st.plotly_chart(fig)
 
-else:
-    # Jika user belum memilih file, tampilkan pesan info
-    st.info("Klik tombol 'Pilih file Excel berekstensi .xlsm' untuk memulai...")
 
 
 
 
-        #Footer
+    #Footer
     #Footer diisi foto ditaruh ditengah
     st.markdown("---")
     kaki_kiri,kaki_kiri2, kaki_tengah,kaki_kanan2, kaki_kanan=st.columns((2,2,1,2,2))
@@ -476,6 +479,13 @@ else:
 
     with kaki_kanan:
         st.write("")
+else:
+    # Jika user belum memilih file, tampilkan pesan info
+    st.info("Menunggu file di-upload...")
+
+
+
+
         
 
 
