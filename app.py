@@ -23,7 +23,7 @@ kolkir,kolnan=st.columns((2,1))	#artinya kolom sebelahkiri lebih lebar 2x dari k
 with kolkir:
 	st.markdown("""<h2 style="color:green;margin-top:-10px;margin-bottom:0px;"> 📊 SUMMARY RECAPITULATION </h2>""", unsafe_allow_html=True)
 	st.write("Stamping Part Summary Report")
-	st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Dedicated to STAMPING PART ©️2024 e-WeYe - All Rights Reserved</p>""", unsafe_allow_html=True)
+	st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:14px"> ©️2024 e-WeYe</p>""", unsafe_allow_html=True)
 
 	
 with kolnan:
@@ -260,19 +260,36 @@ if uploaded_files:  # Jika user telah memilih file
     st.plotly_chart(fig_ng, use_container_width=True)
 
     # Akhir Membuat grafik garis interaktif
-
+    st.markdown("---")
     # Membuat grafik batang interaktif untuk MOR GR#01
     fig = px.bar(
         mor_table,
         x='Nama File',
         y='GR#01',
         color='Nama File',
-        title='GR#01 per File',
-        labels={'GR#01': 'GR#01 (%)', 'Nama File': 'Nama File'}
+        title='Grafik MOR GR#01',
+        labels={'GR#01': 'GR#01 (%)', 'Nama File': 'Bulan-Tahun'},
+        text_auto=True,
     )
 
-    st.plotly_chart(fig)
+    # Menambahkan garis horizontal pada nilai 85%
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=1,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2),
+        xref='paper',
+        yref='y'
+    )
 
+     # Menghilangkan legend
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig)
+    st.markdown("---")
+
+    
         #Footer
     #Footer diisi foto ditaruh ditengah
     st.markdown("---")
