@@ -208,6 +208,7 @@ if uploaded_files:  # Jika user telah memilih file
     st.dataframe(ng_table)
 
     st.markdown("---")
+
      # Membuat grafik garis interaktif MOR
     mor_melted = mor_table.melt(
         id_vars=['Nama File'], 
@@ -259,6 +260,18 @@ if uploaded_files:  # Jika user telah memilih file
     st.plotly_chart(fig_ng, use_container_width=True)
 
     # Akhir Membuat grafik garis interaktif
+
+    # Membuat grafik batang interaktif untuk MOR GR#01
+    fig = px.bar(
+        mor_table,
+        x='Nama File',
+        y='GR#01',
+        color='Nama File',
+        title='GR#01 per File',
+        labels={'GR#01': 'GR#01 (%)', 'Nama File': 'Nama File'}
+    )
+
+    st.plotly_chart(fig)
 
         #Footer
     #Footer diisi foto ditaruh ditengah
