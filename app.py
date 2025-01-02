@@ -68,17 +68,10 @@ with kolnan:
             }}
         }}
         </style>
+
         <div class="container">
             <h2 style="color:blue;">PT. KARYAPRATAMA DUNIA</h2>
             <img src='data:image/png;base64,{image_base64}'/>
-            <br>
-            <br>
-            <p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum upload file:
-                <br>         
-                1. Siapkan file RECAPITULATION dari folder PAMOR<br>
-                2. Pastikan file extensi excelnya adalah .xlsm<br>
-                3. Copy file RECAPITULATION ke dalam folder yang sama<br>
-                4. Beri identitas (rename) pada setiap nama filenya, misal "1Jan2024.xlsm
         </div>
         """,
         unsafe_allow_html=True
@@ -90,7 +83,8 @@ with kolnan:
 #START SEDOT
 # Fungsi untuk membuka dialog multi-file selection
 st.markdown("---")
-    
+
+sisi_kiri,sisi_kanan=st.columns((1,1))    
 # def select_files(): ------> diganti dengan streamlit uploader, krn tkinter tdk bisa dideploy di cloud streamlit - 28Dec2024 11.46WIB 
 #     root = Tk()
 #     root.withdraw()  # Menyembunyikan jendela utama Tkinter
@@ -101,73 +95,86 @@ st.markdown("---")
 #     )
 #     root.destroy()
 #     return file_paths
-
+with sisi_kiri:
 # Function to select files using Streamlit 28Dec2024
-def select_files():
-    # st.title("Upload Excel Files")
-    uploaded_files = st.file_uploader(
-        "Pilih file excel berekstensi .xlsm:",
-        type=["xlsm"],
-        accept_multiple_files=True
-    )
-    return uploaded_files
-    
-if __name__ == "__main__":
-    uploaded_files = select_files()
-    if uploaded_files:
+    def select_files():
+        # st.title("Upload Excel Files")
+        uploaded_files = st.file_uploader(
+            "Pilih file excel berekstensi .xlsm:",
+            type=["xlsm"],
+            accept_multiple_files=True
+        )
+        return uploaded_files
+        
+    if __name__ == "__main__":
+        uploaded_files = select_files()
+        if uploaded_files:
+            for uploaded_file in uploaded_files:
+                st.write(f"Uploaded file: {uploaded_file.name}")
+
+    if uploaded_files:  # Jika user telah memilih file
+        # Alamat sel yang akan diambil
+        cols_mor = ['E7', 'E8', 'E9', 'E11', 'E12', 'E13', 'E14', 'E15', 'E18', 'E19', 'E20']
+        cols_ng = ['P7', 'P8', 'P9', 'P11', 'P12', 'P13', 'P14', 'P15', 'P18', 'P19', 'P20']
+
+        header_names = [
+            'GR#01', 'GR#02', 'GR#04', 'GR#03', 'GR#09',
+            'PW#5', 'RING#7', 'PW#10', 'CR#12', 'CR#13', 'CR#14'
+        ]
+
+        # Untuk menyimpan data
+        data_mor = []
+        data_ng = []
+
         for uploaded_file in uploaded_files:
-            st.write(f"Uploaded file: {uploaded_file.name}")
+            # file_name = uploaded_file.name  # Hanya mengambil nama file
+            # Ambil nama file tanpa ekstensi
+            file_name = os.path.splitext(uploaded_file.name)[0]  # Mengambil nama file tanpa ekstensi
 
-if uploaded_files:  # Jika user telah memilih file
-    # Alamat sel yang akan diambil
-    cols_mor = ['E7', 'E8', 'E9', 'E11', 'E12', 'E13', 'E14', 'E15', 'E18', 'E19', 'E20']
-    cols_ng = ['P7', 'P8', 'P9', 'P11', 'P12', 'P13', 'P14', 'P15', 'P18', 'P19', 'P20']
+            workbook_data_mor = {'Nama File': file_name}
+            workbook_data_ng = {'Nama File': file_name}
 
-    header_names = [
-        'GR#01', 'GR#02', 'GR#04', 'GR#03', 'GR#09',
-        'PW#5', 'RING#7', 'PW#10', 'CR#12', 'CR#13', 'CR#14'
-    ]
+            try:
+                # Membuka workbook menggunakan openpyxl
+                wb = load_workbook(uploaded_file, data_only=True)
+                sheet = wb['REKAP']  # Pastikan nama sheet sesuai
 
-    # Untuk menyimpan data
-    data_mor = []
-    data_ng = []
+                # Mengambil data dari sel yang sesuai untuk MOR dan NG
+                for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
+                    workbook_data_mor[header_names[i]] = sheet[mor_cell].value
+                    workbook_data_ng[header_names[i]] = sheet[ng_cell].value
 
-    for uploaded_file in uploaded_files:
-        # file_name = uploaded_file.name  # Hanya mengambil nama file
-        # Ambil nama file tanpa ekstensi
-        file_name = os.path.splitext(uploaded_file.name)[0]  # Mengambil nama file tanpa ekstensi
+                data_mor.append(workbook_data_mor)
+                data_ng.append(workbook_data_ng)
 
-        workbook_data_mor = {'Nama File': file_name}
-        workbook_data_ng = {'Nama File': file_name}
+                # Pengecekan jika cols_mor atau cols_ng kosong
+                # if cols_mor:
+                #     for col in cols_mor:
+                #         cell_value = sheet[col].value
+                #         workbook_data_mor[col] = str(cell_value) if cell_value is not None else ''
+                #     data_mor.append(workbook_data_mor)
 
-        try:
-            # Membuka workbook menggunakan openpyxl
-            wb = load_workbook(uploaded_file, data_only=True)
-            sheet = wb['REKAP']  # Pastikan nama sheet sesuai
+                # if cols_ng:
+                #     for col in cols_ng:
+                #         cell_value = sheet[col].value
+                #         workbook_data_ng[col] = str(cell_value) if cell_value is not None else ''
+                #     data_ng.append(workbook_data_ng)
 
-            # Mengambil data dari sel yang sesuai untuk MOR dan NG
-            for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
-                workbook_data_mor[header_names[i]] = sheet[mor_cell].value
-                workbook_data_ng[header_names[i]] = sheet[ng_cell].value
+            except Exception as e:
+                st.error(f"Error reading {file_name}: {e}")
+with sisi_kanan:
+    st.markdown(
+        """
+        <p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Sebelum upload file:
+                <br>         
+                1. Siapkan file RECAPITULATION dari folder PAMOR<br>
+                2. Pastikan file extensi excelnya adalah .xlsm<br>
+                3. Copy file RECAPITULATION ke dalam folder yang sama<br>
+                4. Beri identitas (rename) pada setiap nama filenya, misal "1Jan2024.xlsm </p>
+        """,
+        unsafe_allow_html=True
+    )
 
-            data_mor.append(workbook_data_mor)
-            data_ng.append(workbook_data_ng)
-
-            # Pengecekan jika cols_mor atau cols_ng kosong
-            # if cols_mor:
-            #     for col in cols_mor:
-            #         cell_value = sheet[col].value
-            #         workbook_data_mor[col] = str(cell_value) if cell_value is not None else ''
-            #     data_mor.append(workbook_data_mor)
-
-            # if cols_ng:
-            #     for col in cols_ng:
-            #         cell_value = sheet[col].value
-            #         workbook_data_ng[col] = str(cell_value) if cell_value is not None else ''
-            #     data_ng.append(workbook_data_ng)
-
-        except Exception as e:
-            st.error(f"Error reading {file_name}: {e}")
 
     # Membuat DataFrame dari data
     mor_table = pd.DataFrame(data_mor)
