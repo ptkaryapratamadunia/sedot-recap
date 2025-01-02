@@ -119,8 +119,8 @@ if __name__ == "__main__":
 
 if uploaded_files:  # Jika user telah memilih file
     # Alamat sel yang akan diambil
-    cols_mor = ['B4', 'B5', 'B7', 'B6', 'B8', 'B9', 'B10', 'B27', 'B1', 'B2', 'B3']
-    cols_ng = ['D4', 'D5', 'D7', 'D6', 'D8', 'D9', 'D10', 'D27', 'D1', 'D2', 'D3']
+    cols_mor = ['E7', 'E8', 'E9', 'E11', 'E12', 'E13', 'E14', 'E15', 'E18', 'E19', 'E20']
+    cols_ng = ['P7', 'P8', 'P9', 'P11', 'P12', 'P13', 'P14', 'P15', 'P18', 'P19', 'P20']
 
     header_names = [
         'GR#01', 'GR#02', 'GR#04', 'GR#03', 'GR#09',
