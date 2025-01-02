@@ -319,6 +319,71 @@ if uploaded_files:  # Jika user telah memilih file
     
     st.markdown("---")
 
+    # Membuat grafik batang interaktif untuk MOR GR#03
+    fig = px.bar(
+        mor_table,
+        x='Nama File',
+        y='GR#03',
+        color='Nama File',
+        title='Grafik MOR GR#03',
+        labels={'GR#03': 'GR#03 (%)', 'Nama File': 'Bulan-Tahun'},
+        text_auto=True,
+    )
+
+    # Menambahkan garis horizontal pada nilai 85%
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=1,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2),
+        xref='paper',
+        yref='y'
+    )
+
+     # Menghilangkan legend
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig)
+
+    st.markdown("---")
+
+    # Membuat grafik batang interaktif untuk MOR GR#04
+    fig = px.bar(
+        mor_table,
+        x='Nama File',
+        y='GR#04',
+        color='Nama File',
+        title='Grafik MOR GR#04',
+        labels={'GR#04': 'GR#04 (%)', 'Nama File': 'Bulan-Tahun'},
+        text_auto=True,
+    )
+
+    # Menambahkan garis horizontal pada nilai 85%
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=1,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2),
+        xref='paper',
+        yref='y'
+    )
+
+     # Menghilangkan legend
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig)
+
+
+
+
+
+
+
+
+
+
         #Footer
     #Footer diisi foto ditaruh ditengah
     st.markdown("---")
