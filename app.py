@@ -200,9 +200,11 @@ if uploaded_files:  # Jika user telah memilih file
     ng_table.loc['Average', 'Nama File'] = 'Average'
 
     st.markdown("---")
+
+    #start SUMMARY REPORT
     st.subheader("SUMMARY REPORT")
     # Menampilkan tabel di Streamlit
-    st.write("Recapitulation MOR (%)")
+    st.write("Recapitulation MOR (%) - Target 85%")
     st.dataframe(mor_table)
 
     st.write("Recapitulation NG (%)")
