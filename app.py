@@ -145,30 +145,47 @@ if uploaded_files:  # Jika user telah memilih file
             sheet = wb['REKAP']  # Pastikan nama sheet sesuai
 
             # Mengambil data dari sel yang sesuai untuk MOR dan NG
-            # for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
-            #     workbook_data_mor[header_names[i]] = sheet[mor_cell].value
-            #     workbook_data_ng[header_names[i]] = sheet[ng_cell].value
+            for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
+                workbook_data_mor[header_names[i]] = sheet[mor_cell].value
+                workbook_data_ng[header_names[i]] = sheet[ng_cell].value
 
-            # data_mor.append(workbook_data_mor)
-            # data_ng.append(workbook_data_ng)
+            data_mor.append(workbook_data_mor)
+            data_ng.append(workbook_data_ng)
 
             # Pengecekan jika cols_mor atau cols_ng kosong
-            if cols_mor:
-                for col in cols_mor:
-                    workbook_data_mor[col] = sheet[col].value
-                data_mor.append(workbook_data_mor)
+            # if cols_mor:
+            #     for col in cols_mor:
+            #         cell_value = sheet[col].value
+            #         workbook_data_mor[col] = str(cell_value) if cell_value is not None else ''
+            #     data_mor.append(workbook_data_mor)
 
-            if cols_ng:
-                for col in cols_ng:
-                    workbook_data_ng[col] = sheet[col].value
-                data_ng.append(workbook_data_ng)
-                
+            # if cols_ng:
+            #     for col in cols_ng:
+            #         cell_value = sheet[col].value
+            #         workbook_data_ng[col] = str(cell_value) if cell_value is not None else ''
+            #     data_ng.append(workbook_data_ng)
+
         except Exception as e:
             st.error(f"Error reading {file_name}: {e}")
 
     # Membuat DataFrame dari data
     mor_table = pd.DataFrame(data_mor)
     ng_table = pd.DataFrame(data_ng)
+
+    # # Pastikan kolom header_names ada di DataFrame
+    # mor_columns = [col for col in header_names if col in mor_table.columns]
+    # ng_columns = [col for col in header_names if col in ng_table.columns]
+
+    # # Mengubah nilai menjadi numerik, nilai yang tidak dapat dikonversi akan menjadi NaN
+    # mor_table[header_names] = mor_table[header_names].apply(pd.to_numeric, errors='coerce')
+    # ng_table[header_names] = ng_table[header_names].apply(pd.to_numeric, errors='coerce')
+
+    # # Menghitung rata-rata, mengabaikan NaN
+    # mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
+    # ng_table.loc['Average'] = ng_table.mean(numeric_only=True)
+
+    # mor_table.loc['Average', 'Nama File'] = 'Average'
+    # ng_table.loc['Average', 'Nama File'] = 'Average'
 
     # Menambahkan rata-rata baris ('Avg.')
     mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
