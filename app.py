@@ -376,8 +376,63 @@ if uploaded_files:  # Jika user telah memilih file
     st.plotly_chart(fig)
 
 
+    st.markdown("---")
 
+    # Membuat grafik batang interaktif untuk MOR GR#09
+    fig = px.bar(
+        mor_table,
+        x='Nama File',
+        y='GR#04',
+        color='Nama File',
+        title='Grafik MOR GR#09',
+        labels={'GR#09': 'GR#09 (%)', 'Nama File': 'Bulan-Tahun'},
+        text_auto=True,
+    )
 
+    # Menambahkan garis horizontal pada nilai 85%
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=1,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2),
+        xref='paper',
+        yref='y'
+    )
+
+     # Menghilangkan legend
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig)
+
+    st.markdown("---")
+    
+    # Membuat grafik batang interaktif untuk MOR PW#5
+    fig = px.bar(
+        mor_table,
+        x='Nama File',
+        y='PW#5',
+        color='Nama File',
+        title='Grafik MOR PW#5',
+        labels={'GR#09': 'PW#5 (%)', 'Nama File': 'Bulan-Tahun'},
+        text_auto=True,
+    )
+
+    # Menambahkan garis horizontal pada nilai 85%
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=1,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2),
+        xref='paper',
+        yref='y'
+    )
+
+     # Menghilangkan legend
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig)
 
 
 
