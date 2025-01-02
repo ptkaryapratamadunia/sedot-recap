@@ -145,13 +145,24 @@ if uploaded_files:  # Jika user telah memilih file
             sheet = wb['REKAP']  # Pastikan nama sheet sesuai
 
             # Mengambil data dari sel yang sesuai untuk MOR dan NG
-            for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
-                workbook_data_mor[header_names[i]] = sheet[mor_cell].value
-                workbook_data_ng[header_names[i]] = sheet[ng_cell].value
+            # for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
+            #     workbook_data_mor[header_names[i]] = sheet[mor_cell].value
+            #     workbook_data_ng[header_names[i]] = sheet[ng_cell].value
 
-            data_mor.append(workbook_data_mor)
-            data_ng.append(workbook_data_ng)
+            # data_mor.append(workbook_data_mor)
+            # data_ng.append(workbook_data_ng)
 
+            # Pengecekan jika cols_mor atau cols_ng kosong
+            if cols_mor:
+                for col in cols_mor:
+                    workbook_data_mor[col] = sheet[col].value
+                data_mor.append(workbook_data_mor)
+
+            if cols_ng:
+                for col in cols_ng:
+                    workbook_data_ng[col] = sheet[col].value
+                data_ng.append(workbook_data_ng)
+                
         except Exception as e:
             st.error(f"Error reading {file_name}: {e}")
 
