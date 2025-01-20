@@ -822,7 +822,7 @@ if uploaded_files:  # Jika user telah memilih file
         st.plotly_chart(fig)
 
 
-    # Membuat grafik batang interaktif untuk Qty
+    # Membuat grafik batang interaktif untuk Qty 200125
     st.subheader("GRAFIK QTY")
     # Membuat grafik batang interaktif untuk Qty GR#01
     with st.expander("Grafik Qty GR#01"):
