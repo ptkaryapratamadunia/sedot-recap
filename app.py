@@ -309,7 +309,10 @@ if uploaded_files:  # Jika user telah memilih file
     st.plotly_chart(fig_qty, use_container_width=True)
 
     st.markdown("---")
+
+    # Membuat grafik batang interaktif untuk MOR
     st.subheader("GRAFIK MOR")
+
     # Membuat grafik batang interaktif untuk MOR GR#01
     with st.expander("Grafik MOR GR#01"):
         fig = px.bar(
@@ -641,6 +644,7 @@ if uploaded_files:  # Jika user telah memilih file
 
     # Membuat grafik batang interaktif untuk NG
     st.subheader("GRAFIK NG")
+    
     # Membuat grafik batang interaktif untuk NG GR#01
     with st.expander("Grafik NG GR#01"):
         fig = px.bar(
@@ -823,7 +827,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty GR#01
     with st.expander("Grafik Qty GR#01"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='GR#01',
             color='Nama File',
@@ -839,7 +843,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty GR#02
     with st.expander("Grafik Qty GR#02"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='GR#02',
             color='Nama File',
@@ -855,7 +859,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty GR#03
     with st.expander("Grafik Qty GR#03"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='GR#03',
             color='Nama File',
@@ -871,7 +875,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty GR#04
     with st.expander("Grafik Qty GR#04"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='GR#04',
             color='Nama File',
@@ -887,7 +891,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty GR#09
     with st.expander("Grafik Qty GR#09"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='GR#09',
             color='Nama File',
@@ -903,7 +907,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty PW#5
     with st.expander("Grafik Qty PW#5"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='PW#5',
             color='Nama File',
@@ -919,7 +923,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty RING#7
     with st.expander("Grafik Qty RING#7"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='RING#7',
             color='Nama File',
@@ -935,7 +939,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty PW#10
     with st.expander("Grafik Qty PW#10"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='PW#10',
             color='Nama File',
@@ -951,7 +955,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty CR#12
     with st.expander("Grafik Qty CR#12"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='CR#12',
             color='Nama File',
@@ -967,7 +971,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty CR#13
     with st.expander("Grafik Qty CR#13"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='CR#13',
             color='Nama File',
@@ -983,7 +987,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat grafik batang interaktif untuk Qty CR#14
     with st.expander("Grafik Qty CR#14"):
         fig = px.bar(
-            qty_table,
+            qty_table.drop(index='Sum'),
             x='Nama File',
             y='CR#14',
             color='Nama File',
