@@ -206,7 +206,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Menambahkan rata-rata baris ('Avg.')
     mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
     ng_table['Avg.'] = ng_table.iloc[:, 1:].mean(axis=1)
-    qty_table['Sum.'] = qty_table.iloc[:, 1:].sum(axis=1)
+    qty_table['Total'] = qty_table.iloc[:, 1:].sum(axis=1)
 
     # Menambahkan rata-rata kolom
     mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
@@ -216,7 +216,7 @@ if uploaded_files:  # Jika user telah memilih file
     ng_table.loc['Average', 'Nama File'] = 'Average'
 
     qty_table.loc['Sum'] = qty_table.sum(numeric_only=True)
-    qty_table.loc['Sum', 'Nama File'] = 'Sum'
+    qty_table.loc['Sum', 'Nama File'] = 'Total'
 
     st.markdown("---")
 
@@ -234,15 +234,14 @@ if uploaded_files:  # Jika user telah memilih file
 
     st.markdown("---")
 
-        # Membuat grafik garis interaktif MOR
-    mor_melted = mor_table.melt(
+    # Membuat grafik garis interaktif MOR
+    mor_melted = mor_table.drop(index='Average').melt(
         id_vars=['Nama File'], 
         value_vars=header_names,
         var_name='MC', 
         value_name='MOR (%)'
     )
-
-    st.subheader("Grafik Tren MOR by Machine & Month")
+    # st.subheader("Grafik Tren MOR by Machine & Month")
     fig = px.line(
         mor_melted, 
         x='Nama File', 
@@ -260,347 +259,742 @@ if uploaded_files:  # Jika user telah memilih file
     st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
+
     # Membuat grafik garis interaktif untuk NG
-    ng_melted = ng_table.melt(
+    # with st.expander("Grafik Tren NG by Machine & Month"):
+    ng_melted = ng_table.drop(index='Average').melt(
         id_vars=['Nama File'], 
         value_vars=header_names,
         var_name='MC', 
-        value_name='NG (%)'
-    )
-    st.subheader("Grafik Tren NG  by Machine & Month")
+        value_name='NG (%)')
+    # st.subheader("Grafik Tren NG by Machine & Month")
     fig_ng = px.line(
         ng_melted, 
         x='Nama File', 
         y='NG (%)', 
         color='MC',
-        title="Trendline NG  by Machine & Month",
-        markers=True
-    )
+        title="Trendline NG by Machine & Month",
+        markers=True)
     fig_ng.update_layout(
         xaxis_title="Nama File",
-        yaxis_title="ng (%)",
+        yaxis_title="NG (%)",
+        legend_title="MC",
+        template="plotly_white")
+    st.plotly_chart(fig_ng, use_container_width=True)
+
+   
+    # Grafik garis interaktif untuk Qty
+    st.markdown("---")
+    qty_melted = qty_table.drop(index='Sum').melt(
+        id_vars=['Nama File'], 
+        value_vars=header_names,
+        var_name='MC', 
+        value_name='Qty (pcs)'
+    )
+    # st.subheader("Grafik Tren Qty by Machine & Month")
+    fig_qty = px.line(
+        qty_melted, 
+        x='Nama File', 
+        y='Qty (pcs)', 
+        color='MC',
+        title="Trendline Qty by Machine & Month",
+        markers=True
+    )
+    fig_qty.update_layout(
+        xaxis_title="Nama File",
+        yaxis_title="Qty (pcs)",
         legend_title="MC",
         template="plotly_white"
     )
-    st.plotly_chart(fig_ng, use_container_width=True)
+    st.plotly_chart(fig_qty, use_container_width=True)
 
-    # Akhir Membuat grafik garis interaktif
     st.markdown("---")
+    st.subheader("GRAFIK MOR")
     # Membuat grafik batang interaktif untuk MOR GR#01
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='GR#01',
-        color='Nama File',
-        title='Grafik MOR GR#01',
-        labels={'GR#01': 'GR#01 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR GR#01"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='GR#01',
+            color='Nama File',
+            title='Grafik MOR GR#01',
+            labels={'GR#01': 'GR#01 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR GR#02
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='GR#02',
-        color='Nama File',
-        title='Grafik MOR GR#02',
-        labels={'GR#02': 'GR#02 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR GR#02"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='GR#02',
+            color='Nama File',
+            title='Grafik MOR GR#02',
+            labels={'GR#02': 'GR#02 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR GR#03
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='GR#03',
-        color='Nama File',
-        title='Grafik MOR GR#03',
-        labels={'GR#03': 'GR#03 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR GR#03"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='GR#03',
+            color='Nama File',
+            title='Grafik MOR GR#03',
+            labels={'GR#03': 'GR#03 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR GR#04
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='GR#04',
-        color='Nama File',
-        title='Grafik MOR GR#04',
-        labels={'GR#04': 'GR#04 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR GR#04"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='GR#04',
+            color='Nama File',
+            title='Grafik MOR GR#04',
+            labels={'GR#04': 'GR#04 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR GR#09
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='GR#04',
-        color='Nama File',
-        title='Grafik MOR GR#09',
-        labels={'GR#09': 'GR#09 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR GR#09"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='GR#09',
+            color='Nama File',
+            title='Grafik MOR GR#09',
+            labels={'GR#09': 'GR#09 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR PW#5
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='PW#5',
-        color='Nama File',
-        title='Grafik MOR PW#5',
-        labels={'GR#09': 'PW#5 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR PW#5"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='PW#5',
+            color='Nama File',
+            title='Grafik MOR PW#5',
+            labels={'PW#5': 'PW#5 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR RING#7
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='RING#7',
-        color='Nama File',
-        title='Grafik MOR RING#7',
-        labels={'RING#7': 'RING#7 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR RING#7"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='RING#7',
+            color='Nama File',
+            title='Grafik MOR RING#7',
+            labels={'RING#7': 'RING#7 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR PW#10
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='PW#10',
-        color='Nama File',
-        title='Grafik MOR PW#10',
-        labels={'PW#10': 'PW#10 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR PW#10"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='PW#10',
+            color='Nama File',
+            title='Grafik MOR PW#10',
+            labels={'PW#10': 'PW#10 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR CR#12
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='CR#12',
-        color='Nama File',
-        title='Grafik MOR  CR#12',
-        labels={'CR#12': 'CR#12 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR CR#12"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='CR#12',
+            color='Nama File',
+            title='Grafik MOR CR#12',
+            labels={'CR#12': 'CR#12 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR CR#13
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='CR#13',
-        color='Nama File',
-        title='Grafik MOR CR#13',
-        labels={'CR#13': 'CR#13 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR CR#13"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='CR#13',
+            color='Nama File',
+            title='Grafik MOR CR#13',
+            labels={'CR#13': 'CR#13 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # st.markdown("---")
 
     # Membuat grafik batang interaktif untuk MOR CR#14
-    fig = px.bar(
-        mor_table,
-        x='Nama File',
-        y='CR#14',
-        color='Nama File',
-        title='Grafik MOR CR#14',
-        labels={'CR#14': 'CR#14 (%)', 'Nama File': 'Bulan-Tahun'},
-        text_auto=True,
-    )
+    with st.expander("Grafik MOR CR#14"):
+        fig = px.bar(
+            mor_table,
+            x='Nama File',
+            y='CR#14',
+            color='Nama File',
+            title='Grafik MOR CR#14',
+            labels={'CR#14': 'CR#14 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
 
-    # Menambahkan garis horizontal pada nilai 85%
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=1,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2),
-        xref='paper',
-        yref='y'
-    )
+        # Menambahkan garis horizontal pada nilai 85%
+        fig.add_shape(
+            type='line',
+            x0=0,
+            x1=1,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2),
+            xref='paper',
+            yref='y'
+        )
 
         # Menghilangkan legend
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig)
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+
+    # Membuat grafik batang interaktif untuk NG
+    st.subheader("GRAFIK NG")
+    # Membuat grafik batang interaktif untuk NG GR#01
+    with st.expander("Grafik NG GR#01"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='GR#01',
+            color='Nama File',
+            title='Grafik NG GR#01',
+            labels={'GR#01': 'GR#01 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG GR#02
+    with st.expander("Grafik NG GR#02"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='GR#02',
+            color='Nama File',
+            title='Grafik NG GR#02',
+            labels={'GR#02': 'GR#02 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG GR#03
+    with st.expander("Grafik NG GR#03"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='GR#03',
+            color='Nama File',
+            title='Grafik NG GR#03',
+            labels={'GR#03': 'GR#03 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG GR#04
+    with st.expander("Grafik NG GR#04"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='GR#04',
+            color='Nama File',
+            title='Grafik NG GR#04',
+            labels={'GR#04': 'GR#04 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG GR#09
+    with st.expander("Grafik NG GR#09"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='GR#09',
+            color='Nama File',
+            title='Grafik NG GR#09',
+            labels={'GR#09': 'GR#09 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG PW#5
+    with st.expander("Grafik NG PW#5"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='PW#5',
+            color='Nama File',
+            title='Grafik NG PW#5',
+            labels={'PW#5': 'PW#5 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG RING#7
+    with st.expander("Grafik NG RING#7"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='RING#7',
+            color='Nama File',
+            title='Grafik NG RING#7',
+            labels={'RING#7': 'RING#7 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG PW#10
+    with st.expander("Grafik NG PW#10"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='PW#10',
+            color='Nama File',
+            title='Grafik NG PW#10',
+            labels={'PW#10': 'PW#10 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG CR#12
+    with st.expander("Grafik NG CR#12"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='CR#12',
+            color='Nama File',
+            title='Grafik NG CR#12',
+            labels={'CR#12': 'CR#12 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG CR#13
+    with st.expander("Grafik NG CR#13"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='CR#13',
+            color='Nama File',
+            title='Grafik NG CR#13',
+            labels={'CR#13': 'CR#13 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk NG CR#14
+    with st.expander("Grafik NG CR#14"):
+        fig = px.bar(
+            ng_table,
+            x='Nama File',
+            y='CR#14',
+            color='Nama File',
+            title='Grafik NG CR#14',
+            labels={'CR#14': 'CR#14 (%)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+
+    # Membuat grafik batang interaktif untuk Qty
+    st.subheader("GRAFIK QTY")
+    # Membuat grafik batang interaktif untuk Qty GR#01
+    with st.expander("Grafik Qty GR#01"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='GR#01',
+            color='Nama File',
+            title='Grafik Qty GR#01',
+            labels={'GR#01': 'GR#01 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty GR#02
+    with st.expander("Grafik Qty GR#02"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='GR#02',
+            color='Nama File',
+            title='Grafik Qty GR#02',
+            labels={'GR#02': 'GR#02 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty GR#03
+    with st.expander("Grafik Qty GR#03"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='GR#03',
+            color='Nama File',
+            title='Grafik Qty GR#03',
+            labels={'GR#03': 'GR#03 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty GR#04
+    with st.expander("Grafik Qty GR#04"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='GR#04',
+            color='Nama File',
+            title='Grafik Qty GR#04',
+            labels={'GR#04': 'GR#04 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty GR#09
+    with st.expander("Grafik Qty GR#09"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='GR#09',
+            color='Nama File',
+            title='Grafik Qty GR#09',
+            labels={'GR#09': 'GR#09 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty PW#5
+    with st.expander("Grafik Qty PW#5"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='PW#5',
+            color='Nama File',
+            title='Grafik Qty PW#5',
+            labels={'PW#5': 'PW#5 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty RING#7
+    with st.expander("Grafik Qty RING#7"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='RING#7',
+            color='Nama File',
+            title='Grafik Qty RING#7',
+            labels={'RING#7': 'RING#7 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty PW#10
+    with st.expander("Grafik Qty PW#10"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='PW#10',
+            color='Nama File',
+            title='Grafik Qty PW#10',
+            labels={'PW#10': 'PW#10 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty CR#12
+    with st.expander("Grafik Qty CR#12"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='CR#12',
+            color='Nama File',
+            title='Grafik Qty CR#12',
+            labels={'CR#12': 'CR#12 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty CR#13
+    with st.expander("Grafik Qty CR#13"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='CR#13',
+            color='Nama File',
+            title='Grafik Qty CR#13',
+            labels={'CR#13': 'CR#13 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
+
+    # Membuat grafik batang interaktif untuk Qty CR#14
+    with st.expander("Grafik Qty CR#14"):
+        fig = px.bar(
+            qty_table,
+            x='Nama File',
+            y='CR#14',
+            color='Nama File',
+            title='Grafik Qty CR#14',
+            labels={'CR#14': 'CR#14 (pcs)', 'Nama File': 'Bulan-Tahun'},
+            text_auto=True,
+        )
+
+        # Menghilangkan legend
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig)
 
     #Footer
     #Footer diisi foto ditaruh ditengah
