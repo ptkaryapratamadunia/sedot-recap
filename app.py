@@ -154,6 +154,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Alamat sel yang akan diambil
     cols_mor = ['E7', 'E8', 'E9', 'E11', 'E12', 'E13', 'E14', 'E15', 'E18', 'E19', 'E20']
     cols_ng = ['P7', 'P8', 'P9', 'P11', 'P12', 'P13', 'P14', 'P15', 'P18', 'P19', 'P20']
+    cols_qty = ['H7', 'H8', 'H9', 'H11', 'H12', 'H13', 'H14', 'H15','H16','H17', 'H18', 'H19', 'H20']
 
     header_names = [
         'GR#01', 'GR#02', 'GR#04', 'GR#03', 'GR#09',
@@ -163,6 +164,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Untuk menyimpan data
     data_mor = []
     data_ng = []
+    data_qty = []
 
     for uploaded_file in uploaded_files:
         # file_name = uploaded_file.name  # Hanya mengambil nama file
@@ -171,32 +173,27 @@ if uploaded_files:  # Jika user telah memilih file
 
         workbook_data_mor = {'Nama File': file_name}
         workbook_data_ng = {'Nama File': file_name}
+        workbook_data_qty = {'Nama File': file_name}
 
         try:
             # Membuka workbook menggunakan openpyxl
             wb = load_workbook(uploaded_file, data_only=True)
             sheet = wb['REKAP']  # Pastikan nama sheet sesuai
 
-            # Mengambil data dari sel yang sesuai untuk MOR dan NG
-            for i, (mor_cell, ng_cell) in enumerate(zip(cols_mor, cols_ng)):
+            # Mengambil data dari sel yang sesuai untuk MOR, NG dan QTY
+            for i, (mor_cell, ng_cell, qty_cell) in enumerate(zip(cols_mor, cols_ng, cols_qty)):
                 workbook_data_mor[header_names[i]] = sheet[mor_cell].value
                 workbook_data_ng[header_names[i]] = sheet[ng_cell].value
+                if header_names[i] == 'PW#10':
+                    workbook_data_qty[header_names[i]] = (
+                        sheet['H15'].value + sheet['H16'].value + sheet['H17'].value
+                    )
+                else:
+                    workbook_data_qty[header_names[i]] = sheet[qty_cell].value
 
             data_mor.append(workbook_data_mor)
             data_ng.append(workbook_data_ng)
-
-            # Pengecekan jika cols_mor atau cols_ng kosong
-            # if cols_mor:
-            #     for col in cols_mor:
-            #         cell_value = sheet[col].value
-            #         workbook_data_mor[col] = str(cell_value) if cell_value is not None else ''
-            #     data_mor.append(workbook_data_mor)
-
-            # if cols_ng:
-            #     for col in cols_ng:
-            #         cell_value = sheet[col].value
-            #         workbook_data_ng[col] = str(cell_value) if cell_value is not None else ''
-            #     data_ng.append(workbook_data_ng)
+            data_qty.append(workbook_data_qty)
 
         except Exception as e:
             st.error(f"Error reading {file_name}: {e}")
@@ -204,25 +201,12 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat DataFrame dari data
     mor_table = pd.DataFrame(data_mor)
     ng_table = pd.DataFrame(data_ng)
-
-    # # Pastikan kolom header_names ada di DataFrame
-    # mor_columns = [col for col in header_names if col in mor_table.columns]
-    # ng_columns = [col for col in header_names if col in ng_table.columns]
-
-    # # Mengubah nilai menjadi numerik, nilai yang tidak dapat dikonversi akan menjadi NaN
-    # mor_table[header_names] = mor_table[header_names].apply(pd.to_numeric, errors='coerce')
-    # ng_table[header_names] = ng_table[header_names].apply(pd.to_numeric, errors='coerce')
-
-    # # Menghitung rata-rata, mengabaikan NaN
-    # mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
-    # ng_table.loc['Average'] = ng_table.mean(numeric_only=True)
-
-    # mor_table.loc['Average', 'Nama File'] = 'Average'
-    # ng_table.loc['Average', 'Nama File'] = 'Average'
+    qty_table = pd.DataFrame(data_qty)
 
     # Menambahkan rata-rata baris ('Avg.')
     mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
     ng_table['Avg.'] = ng_table.iloc[:, 1:].mean(axis=1)
+    qty_table['Sum.'] = qty_table.iloc[:, 1:].sum(axis=1)
 
     # Menambahkan rata-rata kolom
     mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
@@ -230,6 +214,9 @@ if uploaded_files:  # Jika user telah memilih file
 
     ng_table.loc['Average'] = ng_table.mean(numeric_only=True)
     ng_table.loc['Average', 'Nama File'] = 'Average'
+
+    qty_table.loc['Sum'] = qty_table.sum(numeric_only=True)
+    qty_table.loc['Sum', 'Nama File'] = 'Sum'
 
     st.markdown("---")
 
@@ -241,6 +228,9 @@ if uploaded_files:  # Jika user telah memilih file
 
     st.write("Recapitulation NG (%)")
     st.dataframe(ng_table)
+
+    st.write("Recapitulation Qty (pcs)")
+    st.dataframe(qty_table)
 
     st.markdown("---")
 
