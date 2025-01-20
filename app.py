@@ -109,12 +109,28 @@ with sisi_kiri:
                 2. Pastikan file extensi excelnya adalah .xlsm<br>
                 3. Copy file RECAPITULATION ke dalam folder yang sama<br>
                 4. Beri identitas (rename) pada setiap nama filenya, misal "1Jan2024.xlsm </p>
+                <br>
+              
         """,
         unsafe_allow_html=True
     )
 
 with sisi_kanan:
-    st.write("")
+    
+    st.markdown(
+        """
+        <p style="margin-top:-10px;margin-bottom:0px;font-size:14px">Petunjuk upload file:
+                <br>         
+                1. Klik tombol 'Browse Files' atau drag file ke area yang tersedia<br>
+                2. Pilih file Recapitulation yang sudah diberi identitas pada 1 folder<br>
+                3. Memilih banyak file (multi select) dengan cara menekan tombol SHIFT+ Mouse<br>
+                   (pilih file berurutan) atau CTRL+ Mouse (pilih multi file secara tidak berurutan)<br>
+                4. Klik 'Open' dan Tunggu proses upload file selesai<br>
+                </p>
+                
+        """,
+        unsafe_allow_html=True
+    )
 
 # Function to select files using Streamlit 28Dec2024
 def select_files():
