@@ -22,6 +22,11 @@ header {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+# Fungsi untuk mengubah gambar menjadi base64
+def get_image_as_base64(image_path):
+	with open(image_path, "rb") as img_file:
+		return base64.b64encode(img_file.read()).decode()
+
 # Login Page added 12May2025 20.08 WIb @home
 # def login_page():
 	
@@ -102,10 +107,7 @@ with kol5:
 
 
 
-# Fungsi untuk mengubah gambar menjadi base64
-def get_image_as_base64(image_path):
-	with open(image_path, "rb") as img_file:
-		return base64.b64encode(img_file.read()).decode()
+
 		
 # heading
 kolkir,kolnan=st.columns((2,1))	#artinya kolom sebelahkiri lebih lebar 2x dari kanan
