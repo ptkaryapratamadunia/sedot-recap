@@ -22,6 +22,84 @@ header {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+# Login Page added 12May2025 20.08 WIb @home
+# def login_page():
+	
+
+kol1 ,kol3,kol5 = st.columns((1,1,1))
+
+with kol1:
+    # Adjust the file path based on the current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    logo_KPD = os.path.join(current_dir, 'logoKPD.png')
+    # Memuat gambar dan mengubahnya menjadi base64
+    # logo_KPD ='logoKPD.png'
+    image_base64 = get_image_as_base64(logo_KPD)
+    
+    # Menampilkan gambar dan teks di kolom kanan dengan posisi berdampingan
+    st.markdown(
+        f"""
+        <style>
+        .container {{
+            display: flex;
+            align-items:center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }}
+        .container img {{
+            width: 50px;
+            margin-top: -20px;
+        }}
+        .container h2 {{
+            color: grey;
+            font-size: 20px;
+            margin-top: -20px;
+            margin-right: 10px;
+            margin-bottom: 0px;
+        }}
+        @media (min-width: 600px) {{
+            .container {{
+                justify-content: center;
+            }}
+            .container img {{
+                margin-top: 0;
+            }}
+            .container h2 {{
+                margin-top: 0;
+                text-align: center;
+            }}
+        }}
+        </style>
+        <div class="container">
+            <img src='data:image/png;base64,{image_base64}'/>
+            <h2 style="color:blue;">PT. KARYAPRATAMA DUNIA</h2>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.markdown("<div style='text-align: center; font-weight: bold;color:orange;'>QUALITY DEPARTMENT</div>", unsafe_allow_html=True)
+with kol3:
+    # Form login
+    st.info("Please log in to access the application.")
+    st.markdown('---')
+    st.markdown('<div class="login-container"><div class="login-form">', unsafe_allow_html=True)
+    username = st.text_input("Username", key="username")
+    password = st.text_input("Password", type="password", key="password")
+    if st.button("Login"):
+        if username == "kpd" and password == "kpd080808":
+            st.session_state["logged_in"] = True
+            # Reload halaman dengan mengatur ulang parameter URL
+            st.query_params.clear()
+        else:
+            st.error("Invalid username or password!")
+
+    st.markdown('</div></div>', unsafe_allow_html=True)
+    st.markdown('---')
+with kol5:
+    st.markdown("""<h2 style="color:green;margin-top:-10px;margin-bottom:0px;"> 🧹 DATA CLEANING </h2>""", unsafe_allow_html=True)
+    
+    st.markdown("<div style='text-align: center; font-weight: bold;color:blue;'>Tools Pengolahan Data</div>", unsafe_allow_html=True)
+
 
 
 # Fungsi untuk mengubah gambar menjadi base64
