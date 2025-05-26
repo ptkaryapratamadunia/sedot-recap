@@ -31,9 +31,9 @@ def get_image_as_base64(image_path):
 kolkir,kolnan=st.columns((2,1))	#artinya kolom sebelahkiri lebih lebar 2x dari kanan
 
 with kolkir:
-	st.markdown("""<h2 style="color:green;margin-top:-10px;margin-bottom:0px;"> 📊 SUMMARY RECAPITULATION </h2>""", unsafe_allow_html=True)
-	st.write("Stamping Part Summary Report")
-	st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:14px"> ©️2024 e-WeYe</p>""", unsafe_allow_html=True)
+	st.markdown("""<h2 style="color:green;margin-top:-10px;margin-bottom:0px;"> 📊 SUMMARY REPORT </h2>""", unsafe_allow_html=True)
+	st.write("Production Performance Stamping Part")
+	st.markdown("""<p style="margin-top:-10px;margin-bottom:0px;font-size:10px"> ©️2024 e-WeYe</p>""", unsafe_allow_html=True)
 
 	
 with kolnan:
