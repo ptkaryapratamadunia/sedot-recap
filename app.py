@@ -142,6 +142,10 @@ with sisi_kanan:
         unsafe_allow_html=True
     )
 
+#Added 18Mar2025 to make this apps more user friendly and globally accessible
+st.warning(f"Jika sumber file yang ingin dibersihkan berada di folder Google Drive, unduh/download lewat link berikut ini: [Link Folder](https://drive.google.com/drive/folders/1motad9bizxGZdiODetAo6K7_38dbXxxG?usp=sharing)  |  Download file Excel (.xls, .xlsx atau .csv) dari folder tersebut ke perangkat Anda, lalu unggah/upload file lewat menu Browse di bawah ini:")
+    
+
 # Function to select files using Streamlit 28Dec2024
 def select_files():
     # st.title("Upload Excel Files")
