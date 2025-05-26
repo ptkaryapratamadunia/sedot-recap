@@ -101,9 +101,9 @@ with kol3:
     st.markdown('</div></div>', unsafe_allow_html=True)
     st.markdown('---')
 with kol5:
-    st.markdown("""<h2 style="color:green;margin-top:-10px;margin-bottom:0px;"> 🧹 DATA CLEANING </h2>""", unsafe_allow_html=True)
+    st.markdown("""<h2 style="color:green;margin-top:-10px;margin-bottom:0px;"> 📊 SUMMARY REPORT </h2>""", unsafe_allow_html=True)
     
-    st.markdown("<div style='text-align: center; font-weight: bold;color:blue;'>Tools Pengolahan Data</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; font-weight: bold;color:blue;'>Production Performance Stamping Part</div>", unsafe_allow_html=True)
 
 
 
