@@ -237,6 +237,7 @@ if uploaded_files:  # Jika user telah memilih file
         labels={'x': 'Nomor Mesin', 'y': 'Average MOR (%)'},
         title='Average MOR per Mesin',
         text_auto=True
+        color_discrete_sequence=['#A0C878'] * len(header_names)
     )
     fig_avg_mor.add_shape(
         type='line',
@@ -250,7 +251,7 @@ if uploaded_files:  # Jika user telah memilih file
     )
     st.plotly_chart(fig_avg_mor, use_container_width=True)
 
-    st.write("Recapitulation NG (%) - Target 3%")
+    st.write("Recapitulation NG (%) - Target 0.5%")
     st.dataframe(ng_table)
 
     # Grafik batang rata-rata NG per mesin (warna grey)
@@ -261,7 +262,7 @@ if uploaded_files:  # Jika user telah memilih file
         labels={'x': 'Nomor Mesin', 'y': 'Average NG (%)'},
         title='Average NG per Mesin',
         text_auto=True,
-        color_discrete_sequence=['grey'] * len(header_names)
+        color_discrete_sequence=['#7F8CAA'] * len(header_names)
     )
     fig_avg_ng.add_shape(
         type='line',
@@ -277,6 +278,18 @@ if uploaded_files:  # Jika user telah memilih file
 
     st.write("Recapitulation Qty (pcs)")
     st.dataframe(qty_table)
+
+    # Grafik batang total Qty per mesin (warna light brown)
+    sum_qty_per_machine = qty_table.loc['Sum', header_names]
+    fig_sum_qty = px.bar(
+        x=header_names,
+        y=sum_qty_per_machine.values,
+        labels={'x': 'Nomor Mesin', 'y': 'Total Qty (pcs)'},
+        title='Total Qty per Mesin',
+        text_auto=True,
+        color_discrete_sequence=['#CAE8BD'] * len(header_names)  # light brown
+    )
+    st.plotly_chart(fig_sum_qty, use_container_width=True)
 
     st.markdown("---")
 
