@@ -225,78 +225,93 @@ if uploaded_files:  # Jika user telah memilih file
 
     #start SUMMARY REPORT
     st.subheader("SUMMARY REPORT")
-    # Menampilkan tabel di Streamlit
-    st.write("Recapitulation MOR (%) - Target 85%")
-    st.dataframe(mor_table)
 
-    # Grafik batang rata-rata MOR per mesin
-    avg_mor_per_machine = mor_table.loc['Average', header_names]
-    fig_avg_mor = px.bar(
-        x=header_names,
-        y=avg_mor_per_machine.values,
-        labels={'x': 'Nomor Mesin', 'y': 'Average MOR (%)'},
-        title='Average MOR per Mesin',
-        text_auto=True,
-        color_discrete_sequence=['#A0C878'] * len(header_names)
-    )
-    fig_avg_mor.add_shape(
-        type='line',
-        x0=-0.5,
-        x1=len(header_names)-0.5,
-        y0=85,
-        y1=85,
-        line=dict(color='red', width=2, dash='dash'),
-        xref='x',
-        yref='y'
-    )
-    st.plotly_chart(fig_avg_mor, use_container_width=True)
+    tab_mor, tab_ng, tab_qty = st.tabs(["MOR", "NG", "Qty"])
 
-    st.write("Recapitulation NG (%) - Target 0.5%")
-    st.dataframe(ng_table)
+    with tab_mor:
+        st.subheader("Recapitulation MOR (%) - Target 85%")
+        # Menampilkan tabel di Streamlit
+        st.write("")
+        st.dataframe(mor_table)
 
-    # Grafik batang rata-rata NG per mesin (warna grey)
-    avg_ng_per_machine = ng_table.loc['Average', header_names]
-    fig_avg_ng = px.bar(
-        x=header_names,
-        y=avg_ng_per_machine.values,
-        labels={'x': 'Nomor Mesin', 'y': 'Average NG (%)'},
-        title='Average NG per Mesin',
-        text_auto=True,
-        color_discrete_sequence=['#7F8CAA'] * len(header_names)
-    )
-    fig_avg_ng.add_shape(
-        type='line',
-        x0=-0.5,
-        x1=len(header_names)-0.5,
-        y0=0.5,
-        y1=0.5,
-        line=dict(color='red', width=2, dash='dash'),
-        xref='x',
-        yref='y'
-    )
-    st.plotly_chart(fig_avg_ng, use_container_width=True)
+        # Grafik batang rata-rata MOR per mesin
+        avg_mor_per_machine = mor_table.loc['Average', header_names]
+        fig_avg_mor = px.bar(
+            x=header_names,
+            y=avg_mor_per_machine.values,
+            labels={'x': 'Nomor Mesin', 'y': 'Average MOR (%)'},
+            title='Average MOR per Mesin',
+            text_auto=True,
+            color_discrete_sequence=['#A0C878'] * len(header_names)
+        )
+        fig_avg_mor.add_shape(
+            type='line',
+            x0=-0.5,
+            x1=len(header_names)-0.5,
+            y0=85,
+            y1=85,
+            line=dict(color='red', width=2, dash='dash'),
+            xref='x',
+            yref='y'
+        )
+        st.plotly_chart(fig_avg_mor, use_container_width=True)
 
-    st.write("Recapitulation Qty (pcs)")
-    st.dataframe(qty_table)
+    with tab_ng:
+        st.subheader("Recapitulation NG (%) - Target 0.5%")
+        st.write("")
+        st.dataframe(ng_table)
+        # Grafik batang rata-rata NG per mesin (warna grey)
+        avg_ng_per_machine = ng_table.loc['Average', header_names]
+        fig_avg_ng = px.bar(
+            x=header_names,
+            y=avg_ng_per_machine.values,
+            labels={'x': 'Nomor Mesin', 'y': 'Average NG (%)'},
+            title='Average NG per Mesin',
+            text_auto=True,
+            color_discrete_sequence=['#7F8CAA'] * len(header_names)
+        )
+        fig_avg_ng.add_shape(
+            type='line',
+            x0=-0.5,
+            x1=len(header_names)-0.5,
+            y0=0.5,
+            y1=0.5,
+            line=dict(color='red', width=2, dash='dash'),
+            xref='x',
+            yref='y'
+        )
+        st.plotly_chart(fig_avg_ng, use_container_width=True)
 
-    # Grafik batang total Qty per mesin (warna light brown)
-    sum_qty_per_machine = qty_table.loc['Sum', header_names]
-    fig_sum_qty = px.bar(
-        x=header_names,
-        y=sum_qty_per_machine.values,
-        labels={'x': 'Nomor Mesin', 'y': 'Total Qty (pcs)'},
-        title='Total Qty per Mesin',
-        text=sum_qty_per_machine.apply(lambda x: f"{int(x):,}".replace(",", ".")),  # format with dot as thousand separator
-        text_auto=False,
-        color_discrete_sequence=['#CAE8BD'] * len(header_names)  # light brown
-    )
-    fig_sum_qty.update_traces(textposition='outside')
-    fig_sum_qty.update_layout(
-        yaxis_tickformat=',d',  # show full integer with thousand separator
-        uniformtext_minsize=8,
-        uniformtext_mode='show'
-    )
-    st.plotly_chart(fig_sum_qty, use_container_width=True)
+    with tab_qty:
+        st.subheader("Recapitulation Qty (pcs)")
+        
+        st.dataframe(qty_table)
+
+        # Grafik batang total Qty per mesin (warna light brown)
+        sum_qty_per_machine = qty_table.loc['Sum', header_names]
+        fig_sum_qty = px.bar(
+            x=header_names,
+            y=sum_qty_per_machine.values,
+            labels={'x': 'Nomor Mesin', 'y': 'Total Qty (pcs)'},
+            title='Total Qty per Mesin',
+            text=sum_qty_per_machine.apply(lambda x: f"{int(x):,}".replace(",", ".")),  # format with dot as thousand separator
+            text_auto=False,
+            color_discrete_sequence=['#CAE8BD'] * len(header_names)  # light brown
+        )
+        fig_sum_qty.update_traces(textposition='outside')
+        fig_sum_qty.update_layout(
+            yaxis_tickformat=',d',  # show full integer with thousand separator
+            uniformtext_minsize=8,
+            uniformtext_mode='show'
+        )
+        st.plotly_chart(fig_sum_qty, use_container_width=True)
+    
+
+    
+
+    
+
+    
 
     st.markdown("---")
 
@@ -375,6 +390,8 @@ if uploaded_files:  # Jika user telah memilih file
     st.plotly_chart(fig_qty, use_container_width=True)
 
     st.markdown("---")
+
+    
 
     # Membuat grafik batang interaktif untuk MOR
     st.subheader("GRAFIK MOR")
