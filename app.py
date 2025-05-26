@@ -236,7 +236,7 @@ if uploaded_files:  # Jika user telah memilih file
         y=avg_mor_per_machine.values,
         labels={'x': 'Nomor Mesin', 'y': 'Average MOR (%)'},
         title='Average MOR per Mesin',
-        text_auto=True
+        text_auto=True,
         color_discrete_sequence=['#A0C878'] * len(header_names)
     )
     fig_avg_mor.add_shape(
