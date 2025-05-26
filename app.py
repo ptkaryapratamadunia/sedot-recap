@@ -893,188 +893,188 @@ if uploaded_files:  # Jika user telah memilih file
             )
             st.plotly_chart(fig_qty, use_container_width=True)
 
-        st.markdown("---")
+            st.markdown("---")
     
-        # Membuat grafik batang interaktif untuk Qty 200125
-        st.subheader("GRAFIK QTY")
-        # Membuat grafik batang interaktif untuk Qty GR#01
-        with st.expander("Grafik Qty GR#01"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='GR#01',
-                color='Nama File',
-                title='Grafik Qty GR#01',
-                labels={'GR#01': 'GR#01 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty 200125
+            st.subheader("GRAFIK QTY")
+            # Membuat grafik batang interaktif untuk Qty GR#01
+            with st.expander("Grafik Qty GR#01"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='GR#01',
+                    color='Nama File',
+                    title='Grafik Qty GR#01',
+                    labels={'GR#01': 'GR#01 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty GR#02
-        with st.expander("Grafik Qty GR#02"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='GR#02',
-                color='Nama File',
-                title='Grafik Qty GR#02',
-                labels={'GR#02': 'GR#02 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty GR#02
+            with st.expander("Grafik Qty GR#02"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='GR#02',
+                    color='Nama File',
+                    title='Grafik Qty GR#02',
+                    labels={'GR#02': 'GR#02 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty GR#03
-        with st.expander("Grafik Qty GR#03"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='GR#03',
-                color='Nama File',
-                title='Grafik Qty GR#03',
-                labels={'GR#03': 'GR#03 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty GR#03
+            with st.expander("Grafik Qty GR#03"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='GR#03',
+                    color='Nama File',
+                    title='Grafik Qty GR#03',
+                    labels={'GR#03': 'GR#03 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty GR#04
-        with st.expander("Grafik Qty GR#04"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='GR#04',
-                color='Nama File',
-                title='Grafik Qty GR#04',
-                labels={'GR#04': 'GR#04 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty GR#04
+            with st.expander("Grafik Qty GR#04"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='GR#04',
+                    color='Nama File',
+                    title='Grafik Qty GR#04',
+                    labels={'GR#04': 'GR#04 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty GR#09
-        with st.expander("Grafik Qty GR#09"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='GR#09',
-                color='Nama File',
-                title='Grafik Qty GR#09',
-                labels={'GR#09': 'GR#09 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty GR#09
+            with st.expander("Grafik Qty GR#09"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='GR#09',
+                    color='Nama File',
+                    title='Grafik Qty GR#09',
+                    labels={'GR#09': 'GR#09 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty PW#5
-        with st.expander("Grafik Qty PW#5"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='PW#5',
-                color='Nama File',
-                title='Grafik Qty PW#5',
-                labels={'PW#5': 'PW#5 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty PW#5
+            with st.expander("Grafik Qty PW#5"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='PW#5',
+                    color='Nama File',
+                    title='Grafik Qty PW#5',
+                    labels={'PW#5': 'PW#5 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty RING#7
-        with st.expander("Grafik Qty RING#7"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='RING#7',
-                color='Nama File',
-                title='Grafik Qty RING#7',
-                labels={'RING#7': 'RING#7 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty RING#7
+            with st.expander("Grafik Qty RING#7"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='RING#7',
+                    color='Nama File',
+                    title='Grafik Qty RING#7',
+                    labels={'RING#7': 'RING#7 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty PW#10
-        with st.expander("Grafik Qty PW#10"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='PW#10',
-                color='Nama File',
-                title='Grafik Qty PW#10',
-                labels={'PW#10': 'PW#10 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty PW#10
+            with st.expander("Grafik Qty PW#10"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='PW#10',
+                    color='Nama File',
+                    title='Grafik Qty PW#10',
+                    labels={'PW#10': 'PW#10 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty CR#12
-        with st.expander("Grafik Qty CR#12"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='CR#12',
-                color='Nama File',
-                title='Grafik Qty CR#12',
-                labels={'CR#12': 'CR#12 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty CR#12
+            with st.expander("Grafik Qty CR#12"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='CR#12',
+                    color='Nama File',
+                    title='Grafik Qty CR#12',
+                    labels={'CR#12': 'CR#12 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty CR#13
-        with st.expander("Grafik Qty CR#13"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='CR#13',
-                color='Nama File',
-                title='Grafik Qty CR#13',
-                labels={'CR#13': 'CR#13 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty CR#13
+            with st.expander("Grafik Qty CR#13"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='CR#13',
+                    color='Nama File',
+                    title='Grafik Qty CR#13',
+                    labels={'CR#13': 'CR#13 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-        # Membuat grafik batang interaktif untuk Qty CR#14
-        with st.expander("Grafik Qty CR#14"):
-            fig = px.bar(
-                qty_table.drop(index='Sum'),
-                x='Nama File',
-                y='CR#14',
-                color='Nama File',
-                title='Grafik Qty CR#14',
-                labels={'CR#14': 'CR#14 (pcs)', 'Nama File': 'Bulan-Tahun'},
-                text_auto=True,
-            )
+            # Membuat grafik batang interaktif untuk Qty CR#14
+            with st.expander("Grafik Qty CR#14"):
+                fig = px.bar(
+                    qty_table.drop(index='Sum'),
+                    x='Nama File',
+                    y='CR#14',
+                    color='Nama File',
+                    title='Grafik Qty CR#14',
+                    labels={'CR#14': 'CR#14 (pcs)', 'Nama File': 'Bulan-Tahun'},
+                    text_auto=True,
+                )
 
-            # Menghilangkan legend
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig)
+                # Menghilangkan legend
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig)
 
-    
-    #end Qty
+        
+        #end Qty
 
     #end SUMMARY REPORT
     # ---- FOOTER ----
