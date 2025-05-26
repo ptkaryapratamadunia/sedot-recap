@@ -1,6 +1,6 @@
 #Bismillah : 28 Dec 2024 @home saturday in the old date
 #Create APPs for scraping data in RECAPITULATION.xlsm
-#Dedicated to stamping dept. after Excel Version earlier in 2020
+#Dedicated to stamping dept. PT. KPD  (after Excel Version earlier in 2020)
 
 import os
 import pandas as pd
@@ -11,6 +11,16 @@ import base64
 import plotly.express as px
 
 st.set_page_config(page_title="Quality Stamping Report", page_icon=":bar_chart:",layout="wide")
+
+# ---- HIDE STREAMLIT STYLE ----
+hide_st_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+</style>
+"""
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Fungsi untuk mengubah gambar menjadi base64
 def get_image_as_base64(image_path):
