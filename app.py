@@ -143,7 +143,7 @@ with sisi_kanan:
     )
 
 #Added 18Mar2025 to make this apps more user friendly and globally accessible
-st.warning(f"Jika sumber file yang ingin dibersihkan berada di folder Google Drive, unduh/download lewat link berikut ini: [Link Folder](https://drive.google.com/drive/folders/1wdumCde2NJaeH-cgdxdukGvTKpjbS3qT?usp=sharing)  |  Download file Excel (.xls, .xlsx atau .csv) dari folder tersebut ke perangkat Anda, lalu unggah/upload file lewat menu Browse di bawah ini:")
+st.warning(f"Jika sumber file yang ingin dibersihkan berada di folder Google Drive, unduh/download lewat link berikut ini: [Link Folder](https://drive.google.com/drive/folders/1wdumCde2NJaeH-cgdxdukGvTKpjbS3qT?usp=sharing)  |  Download file Excel (hanya .xlsm) dari folder tersebut ke perangkat Anda, lalu unggah/upload file lewat menu Browse Files di bawah ini:")
     
 
 # Function to select files using Streamlit 28Dec2024
