@@ -100,16 +100,7 @@ with kolnan:
 st.markdown("---")
 
 sisi_kiri,sisi_kanan=st.columns((1,1))    
-# def select_files(): ------> diganti dengan streamlit uploader, krn tkinter tdk bisa dideploy di cloud streamlit - 28Dec2024 11.46WIB 
-#     root = Tk()
-#     root.withdraw()  # Menyembunyikan jendela utama Tkinter
-#     root.attributes('-topmost', True)  # Membawa dialog ke depan
-#     file_paths = filedialog.askopenfilenames(
-#         title="Pilih file Excel",
-#         filetypes=[("Excel files", "*.xlsm")]
-#     )
-#     root.destroy()
-#     return file_paths
+# Menampilkan petunjuk di sisi kiri
 with sisi_kiri:
         st.markdown(
         """
@@ -124,7 +115,7 @@ with sisi_kiri:
         """,
         unsafe_allow_html=True
     )
-
+# Menampilkan petunjuk di sisi kanan
 with sisi_kanan:
     
     st.markdown(
@@ -158,12 +149,8 @@ def select_files():
 
 uploaded_files = select_files()
     
-# if __name__ == "__main__":
-#     uploaded_files = select_files()
-#     if uploaded_files:
-#         for uploaded_file in uploaded_files:
-#             st.write(f"Uploaded file: {uploaded_file.name}")
-
+# Start Cleaning
+#region untuk mengambil data dari file yang diupload
 if uploaded_files:  # Jika user telah memilih file
     # Alamat sel yang akan diambil
     cols_mor = ['E7', 'E8', 'E9', 'E11', 'E12', 'E13', 'E14', 'E15', 'E18', 'E19', 'E20']
@@ -234,11 +221,34 @@ if uploaded_files:  # Jika user telah memilih file
 
     st.markdown("---")
 
+#end region
+
     #start SUMMARY REPORT
     st.subheader("SUMMARY REPORT")
     # Menampilkan tabel di Streamlit
     st.write("Recapitulation MOR (%) - Target 85%")
     st.dataframe(mor_table)
+
+    # Grafik batang rata-rata MOR per mesin
+    avg_mor_per_machine = mor_table.loc['Average', header_names]
+    fig_avg_mor = px.bar(
+        x=header_names,
+        y=avg_mor_per_machine.values,
+        labels={'x': 'Nomor Mesin', 'y': 'Average MOR (%)'},
+        title='Average MOR per Mesin',
+        text_auto=True
+    )
+    fig_avg_mor.add_shape(
+        type='line',
+        x0=-0.5,
+        x1=len(header_names)-0.5,
+        y0=85,
+        y1=85,
+        line=dict(color='red', width=2, dash='dash'),
+        xref='x',
+        yref='y'
+    )
+    st.plotly_chart(fig_avg_mor, use_container_width=True)
 
     st.write("Recapitulation NG (%)")
     st.dataframe(ng_table)
@@ -625,9 +635,10 @@ if uploaded_files:  # Jika user telah memilih file
         fig.update_layout(showlegend=False)
         st.plotly_chart(fig)
 
-    # st.markdown("---")
+
 
     # Membuat grafik batang interaktif untuk MOR CR#14
+
     with st.expander("Grafik MOR CR#14"):
         fig = px.bar(
             mor_table,
