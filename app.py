@@ -286,8 +286,15 @@ if uploaded_files:  # Jika user telah memilih file
         y=sum_qty_per_machine.values,
         labels={'x': 'Nomor Mesin', 'y': 'Total Qty (pcs)'},
         title='Total Qty per Mesin',
-        text_auto=True,
+        text=sum_qty_per_machine.apply(lambda x: f"{int(x):,}".replace(",", ".")),  # format with dot as thousand separator
+        text_auto=False,
         color_discrete_sequence=['#CAE8BD'] * len(header_names)  # light brown
+    )
+    fig_sum_qty.update_traces(textposition='outside')
+    fig_sum_qty.update_layout(
+        yaxis_tickformat=',d',  # show full integer with thousand separator
+        uniformtext_minsize=8,
+        uniformtext_mode='show'
     )
     st.plotly_chart(fig_sum_qty, use_container_width=True)
 
