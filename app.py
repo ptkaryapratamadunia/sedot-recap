@@ -250,8 +250,30 @@ if uploaded_files:  # Jika user telah memilih file
     )
     st.plotly_chart(fig_avg_mor, use_container_width=True)
 
-    st.write("Recapitulation NG (%)")
+    st.write("Recapitulation NG (%) - Target 3%")
     st.dataframe(ng_table)
+
+    # Grafik batang rata-rata NG per mesin (warna grey)
+    avg_ng_per_machine = ng_table.loc['Average', header_names]
+    fig_avg_ng = px.bar(
+        x=header_names,
+        y=avg_ng_per_machine.values,
+        labels={'x': 'Nomor Mesin', 'y': 'Average NG (%)'},
+        title='Average NG per Mesin',
+        text_auto=True,
+        color_discrete_sequence=['grey'] * len(header_names)
+    )
+    fig_avg_ng.add_shape(
+        type='line',
+        x0=-0.5,
+        x1=len(header_names)-0.5,
+        y0=3,
+        y1=3,
+        line=dict(color='red', width=2, dash='dash'),
+        xref='x',
+        yref='y'
+    )
+    st.plotly_chart(fig_avg_ng, use_container_width=True)
 
     st.write("Recapitulation Qty (pcs)")
     st.dataframe(qty_table)
