@@ -267,8 +267,8 @@ if uploaded_files:  # Jika user telah memilih file
         type='line',
         x0=-0.5,
         x1=len(header_names)-0.5,
-        y0=3,
-        y1=3,
+        y0=0.5,
+        y1=0.5,
         line=dict(color='red', width=2, dash='dash'),
         xref='x',
         yref='y'
