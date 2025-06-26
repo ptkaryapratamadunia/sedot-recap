@@ -306,10 +306,10 @@ if uploaded_files:  # Jika user telah memilih file
     qty_table = pd.DataFrame(data_qty)
 
     # Menambahkan rata-rata baris ('Avg.')
-    mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1,numeric_only=True)
+    mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
 
     # Menambahkan rata-rata kolom
-    # mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
+    mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
     mor_table.loc['Average', 'Nama File'] = 'Average'
 
     # Tambahkan baris terakhir berisi nilai teks 'MOR' untuk semua kolom, dinamakan 'Category'
