@@ -971,8 +971,8 @@ if uploaded_files:  # Jika user telah memilih file
 
     with tab_qty:#Tab untuk Qty
         st.subheader("Recapitulation Qty (pcs)")
-        qty_table = qty_table.applymap(lambda x: format_digit(x, 0))
-        st.dataframe(qty_table, use_container_width=True,hide_index=True)
+        
+        st.dataframe(qty_table, use_container_width=True,hide_index=True).map(lambda x: format_digit(x, 0))  # Format Qty tanpa desimal
 
         # Grafik batang total Qty per mesin (warna light brown)
         sum_qty_per_machine = qty_table.loc['Sum', header_names]
