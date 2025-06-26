@@ -293,12 +293,12 @@ if uploaded_files:  # Jika user telah memilih file
     qty_table = pd.DataFrame(data_qty)
 
     # Menambahkan rata-rata baris ('Avg.')
+    mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
 
     # Tambahkan baris terakhir berisi nilai teks 'MOR' untuk semua kolom, dinamakan 'Category'
     category_row = {col: 'MOR' for col in mor_table.columns}
     category_row['Nama File'] = 'Category'
     mor_table.loc['Category'] = category_row
-    mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
 
     ng_table['Avg.'] = ng_table.iloc[:, 1:].mean(axis=1)
     qty_table['Total'] = qty_table.iloc[:, 1:].sum(axis=1)
