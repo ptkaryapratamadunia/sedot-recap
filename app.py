@@ -309,15 +309,7 @@ if uploaded_files:  # Jika user telah memilih file
     mor_table['Avg.'] = mor_table.iloc[:, 1:].apply(pd.to_numeric, errors='coerce').mean(axis=1)
 
     # Menambahkan rata-rata kolom (exclude non-numeric rows like 'Category' if present)
-    numeric_rows = mor_table[~mor_table['Nama File'].isin(['Category'])]
-    avg_values = numeric_rows[header_names + ['Avg.']].apply(pd.to_numeric, errors='coerce').mean(axis=0)
-    mor_table.loc['Average', header_names + ['Avg.']] = avg_values
-    mor_table.loc['Average', 'Nama File'] = 'Average'
-
-    # Tambahkan baris terakhir berisi nilai teks 'MOR' untuk semua kolom, dinamakan 'Category'
-    category_row = {col: 'MOR' for col in mor_table.columns}
-    category_row['Nama File'] = 'Category'
-    mor_table.loc['Category'] = category_row
+    
 
     ng_table['Avg.'] = ng_table.iloc[:, 1:].mean(axis=1)
     qty_table['Total'] = qty_table.iloc[:, 1:].sum(axis=1)
