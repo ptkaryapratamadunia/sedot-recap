@@ -308,7 +308,7 @@ if uploaded_files:  # Jika user telah memilih file
     # Membuat DataFrame dari data
     mor_table = pd.DataFrame(data_mor)
     ng_table = pd.DataFrame(data_ng)
-    qty_table = pd.DataFrame(data_qty)
+    qty_table = pd.DataFrame(data_qty).applymap(lambda x: format_digit(x, 0))  # Format Qty sebagai integer
 
     # Menambahkan rata-rata baris ('Avg.')
     mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
