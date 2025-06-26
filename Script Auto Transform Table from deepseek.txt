@@ -1,0 +1,85 @@
+import pandas as pd
+import streamlit as st
+from io import BytesIO
+
+def transform_data(df):
+    """
+    Transforms the raw data into the desired long format.
+    Args:
+        df (pd.DataFrame): Raw data from Excel/CSV.
+    Returns:
+        pd.DataFrame: Transformed data with columns [Category, Month, M/C No., Value].
+    """
+    # Detect the category (assumed to be in the last row)
+    category = df.iloc[-1, 1]
+    
+    # Identify date rows (exclude the category row)
+    data_rows = df.iloc[:-1, :].copy()
+    
+    # Melt the dataframe into long format
+    melted_df = pd.melt(
+        data_rows,
+        id_vars=[df.columns[0]],  # First column (dates)
+        var_name="M/C No.",
+        value_name="Value"
+    )
+    
+    # Rename columns and add category
+    melted_df.columns = ["Date", "M/C No.", "Value"]
+    melted_df["Category"] = category
+    
+    # Convert dates to Month-Year format (e.g., "March-25")
+    melted_df["Month"] = pd.to_datetime(melted_df["Date"]).dt.strftime("%B-%y")
+    
+    # Reorder columns
+    final_df = melted_df[["Category", "Month", "M/C No.", "Value"]]
+    
+    return final_df
+
+def main():
+    st.title("📊 Excel Data Transformer")
+    st.markdown("Upload your Excel/CSV file to convert it into the long format.")
+    
+    # File upload
+    uploaded_file = st.file_uploader("Choose a file", type=["xlsx", "csv"])
+    
+    if uploaded_file:
+        try:
+            # Read the file
+            if uploaded_file.name.endswith('.xlsx'):
+                df = pd.read_excel(uploaded_file, header=None)  # Adjust header if needed
+            else:
+                df = pd.read_csv(uploaded_file, header=None)
+            
+            # Transform data
+            transformed_df = transform_data(df)
+            
+            # Show results
+            st.success("✅ Data transformed successfully!")
+            st.dataframe(transformed_df)
+            
+            # Download buttons
+            output = BytesIO()
+            with pd.ExcelWriter(output, engine="openpyxl") as writer:
+                transformed_df.to_excel(writer, index=False)
+            
+            st.download_button(
+                label="📥 Download as Excel",
+                data=output.getvalue(),
+                file_name="transformed_data.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+            
+            csv = transformed_df.to_csv(index=False).encode()
+            st.download_button(
+                label="📥 Download as CSV",
+                data=csv,
+                file_name="transformed_data.csv",
+                mime="text/csv"
+            )
+            
+        except Exception as e:
+            st.error(f"❌ Error: {str(e)}")
+
+if __name__ == "__main__":
+    main()
