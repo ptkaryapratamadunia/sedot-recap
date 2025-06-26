@@ -323,8 +323,19 @@ if uploaded_files:  # Jika user telah memilih file
     ng_table.loc['Average'] = ng_table.mean(numeric_only=True)
     ng_table.loc['Average', 'Nama File'] = 'Average'
 
+    # Menambahkan baris 'Category' dengan isi 'NG'
+    ng_table.loc['Category'] = ''
+    ng_table.loc['Category', 'Nama File'] = 'Category'
+    for col in header_names:
+        ng_table.loc['Category', col] = 'NG'
+
     qty_table.loc['Sum'] = qty_table.sum(numeric_only=True)
     qty_table.loc['Sum', 'Nama File'] = 'Total'
+    # Tambahkan baris 'Category' di bawah 'Average' (atau 'Sum') dengan isi 'QTY'
+    qty_table.loc['Category'] = ''
+    qty_table.loc['Category', 'Nama File'] = 'Category'
+    for col in header_names:
+        qty_table.loc['Category', col] = 'QTY'
 
     st.markdown("---")
 
