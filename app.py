@@ -245,7 +245,7 @@ def format_digit(value, digit=4):
         # Format angka dengan pemisah ribuan dan digit desimal
         formatted = f"{float(value):,.{digit}f}"
         # Ganti koma (,) menjadi titik (.) untuk ribuan, dan titik (.) menjadi koma (,) untuk desimal
-        formatted = formatted.replace(",", "X").replace(".", ",").replace("X", ".")
+        # formatted = formatted.replace(",", "X").replace(".", ",").replace("X", ".")
         return formatted
     except (ValueError, TypeError):
         return value
