@@ -320,7 +320,7 @@ if uploaded_files:  # Jika user telah memilih file
         st.subheader("Recapitulation MOR (%) - Target 85%")
         # Menampilkan tabel di Streamlit
         st.write("")
-        st.dataframe(mor_table)
+        st.dataframe(mor_table, use_container_width=True,hide_index=True)
 
         # Grafik batang rata-rata MOR per mesin
         avg_mor_per_machine = mor_table.loc['Average', header_names]
