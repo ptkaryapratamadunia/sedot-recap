@@ -705,7 +705,7 @@ if uploaded_files:  # Jika user telah memilih file
     with tab_ng: #Tab untuk NG
         st.subheader("Recapitulation NG (%) - Target 0.5%")
         st.write("")
-        st.dataframe(ng_table)
+        st.dataframe(ng_table, use_container_width=True,hide_index=True)
         # Grafik batang rata-rata NG per mesin (warna grey)
         avg_ng_per_machine = ng_table.loc['Average', header_names]
         fig_avg_ng = px.bar(
