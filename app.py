@@ -235,6 +235,19 @@ def select_files():
     )
     return uploaded_files
 
+def format_digit(value, digit=4):
+    """
+    Format angka dengan jumlah digit di belakang titik sesuai parameter.
+    Jika value bukan angka, akan dikembalikan apa adanya.
+    """
+    try:
+        return f"{float(value):.{digit}f}"
+    except (ValueError, TypeError):
+        return value
+
+# Contoh penggunaan pada DataFrame:
+# mor_table = mor_table.applymap(lambda x: format_digit(x, 4))
+
 uploaded_files = select_files()
     
 # Start Cleaning
@@ -326,6 +339,7 @@ if uploaded_files:  # Jika user telah memilih file
         st.subheader("Recapitulation MOR (%) - Target 85%")
         # Menampilkan tabel di Streamlit
         st.write("")
+        mor_table = mor_table.applymap(lambda x: format_digit(x, 4))
         st.dataframe(mor_table, use_container_width=True,hide_index=True)
 
         # Grafik batang rata-rata MOR per mesin
