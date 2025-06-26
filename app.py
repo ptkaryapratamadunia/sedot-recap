@@ -971,7 +971,7 @@ if uploaded_files:  # Jika user telah memilih file
 
     with tab_qty:#Tab untuk Qty
         st.subheader("Recapitulation Qty (pcs)")
-        qty_table=qty_table.apply(lambda x: f"{int(x):,}".replace(",", "."))
+        
         st.dataframe(qty_table, use_container_width=True,hide_index=True)
 
         # Grafik batang total Qty per mesin (warna light brown)
