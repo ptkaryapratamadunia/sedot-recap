@@ -298,7 +298,13 @@ if uploaded_files:  # Jika user telah memilih file
     # Tambahkan baris terakhir berisi nilai teks 'MOR' untuk semua kolom, dinamakan 'Category'
     category_row = {col: 'MOR' for col in mor_table.columns}
     category_row['Nama File'] = 'Category'
-    mor_table.loc['Category'] = category_row
+    # Simpan baris Average, lalu Category, lalu gabungkan ulang
+    if 'Average' in mor_table.index:
+        average_row = mor_table.loc[['Average']]
+        mor_table = mor_table.drop('Average')
+        mor_table = pd.concat([mor_table, average_row, pd.DataFrame([category_row], index=['Category'])])
+    else:
+        mor_table = pd.concat([mor_table, pd.DataFrame([category_row], index=['Category'])])
 
     ng_table['Avg.'] = ng_table.iloc[:, 1:].mean(axis=1)
     qty_table['Total'] = qty_table.iloc[:, 1:].sum(axis=1)
