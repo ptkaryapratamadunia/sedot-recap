@@ -308,8 +308,9 @@ if uploaded_files:  # Jika user telah memilih file
     # Menambahkan rata-rata baris ('Avg.')
     mor_table['Avg.'] = mor_table.iloc[:, 1:].mean(axis=1)
 
-    # Menambahkan rata-rata kolom
-    mor_table.loc['Average'] = mor_table.mean(numeric_only=True)
+    # Menambahkan rata-rata kolom (exclude non-numeric rows like 'Category' if present)
+    numeric_rows = mor_table[~mor_table['Nama File'].isin(['Category'])]
+    mor_table.loc['Average'] = numeric_rows.mean(numeric_only=True)
     mor_table.loc['Average', 'Nama File'] = 'Average'
 
     # Tambahkan baris terakhir berisi nilai teks 'MOR' untuk semua kolom, dinamakan 'Category'
