@@ -736,6 +736,7 @@ if uploaded_files:  # Jika user telah memilih file
     with tab_ng: #Tab untuk NG
         st.subheader("Recapitulation NG (%) - Target 0.5%")
         st.write("")
+        ng_table = ng_table.applymap(lambda x: format_digit(x, 4))
         st.dataframe(ng_table, use_container_width=True,hide_index=True)
         # Grafik batang rata-rata NG per mesin (warna grey)
         avg_ng_per_machine = ng_table.loc['Average', header_names]
@@ -965,7 +966,7 @@ if uploaded_files:  # Jika user telah memilih file
 
     with tab_qty:#Tab untuk Qty
         st.subheader("Recapitulation Qty (pcs)")
-        
+        qty_table = qty_table.applymap(lambda x: format_digit(x, 4))
         st.dataframe(qty_table, use_container_width=True,hide_index=True)
 
         # Grafik batang total Qty per mesin (warna light brown)
